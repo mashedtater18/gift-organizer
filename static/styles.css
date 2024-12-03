@@ -1,0 +1,210 @@
+/* Size for brand */
+nav .navbar-brand
+{
+    font-size: xx-large;
+}
+
+/* font for navbar */
+.navbar-brand .custom-font {
+    font-family: 'EB Garamond', serif;
+}
+
+
+ Colors for brand 
+nav .navbar-brand .blue
+{
+    color: #537fbe;
+}
+nav .navbar-brand .red
+{
+    color: #B22222;
+}
+nav .navbar-brand .yellow
+{
+    color: #f5b82e;
+}
+nav .navbar-brand .green
+{
+    color: #2e944b;
+}
+
+
+.action-button img {
+    outline: none;
+    border: none;
+    color: "#7a7a7a";
+}
+
+.action-button {
+    outline: none;
+    border: none;
+    background: none;
+    color: "#7a7a7a";
+}
+
+img {
+    filter: grayscale(1) sepia(1) hue-rotate(0deg) saturate(5) brightness(0.8);
+  }
+
+
+.action-button i {
+    filter: grayscale(100%);
+    transition: filter 0.2s ease;
+    opacity: 0.5; /* Makes the icon semi-transparent */
+    transition: opacity 0.2s ease; /* Smooth transition for hover effects */
+}
+
+.action-button i:hover {
+    filter: grayscale(0%);
+    opacity: 1; /* Full opacity on hover */
+
+}
+
+h1, h2, h4 {
+    font-family: 'EB Garamond', serif; /* Specify the font and a fallback */
+    margin-bottom: 2px; /* Adjust spacing as needed */
+    color: #B22222;
+
+    
+}
+
+a {
+    color: #006400; /* Darkish red */
+}
+
+a:hover {
+    color: #B22222; /* Slightly lighter red on hover (optional) */
+}
+
+/* Center the overall container */
+.budget-container {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.centered-container {
+    width: 80%;           /* Adjust width as needed */
+    margin: 0 auto;       /* Centers the container */
+    text-align: center;   /* Centers text inside elements */
+}
+
+/* Header Styles */
+.main-header {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.sub-header {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* Budget Table */
+.budget-table {
+    display: inline-block; /* Keeps the "table" centered */
+    text-align: left;      /* Aligns content within the "table" */
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+/* Budget Row */
+.budget-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+/* Ensures the table layout is uniform and labels/input fields are aligned */
+table {
+    width: 60%;  /* Takes full width */
+    margin: 0 auto;
+    table-layout: fixed;  /* Ensures equal spacing for all columns */
+    border-spacing: 10px; /* Add spacing between rows and columns */
+}
+
+/* Label and Value Styles */
+.label {
+    text-align: left;
+    width: 250px; /* Adjust width as needed */
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.value {
+    text-align: left;
+    width: 100px; /* Adjust width as needed */
+    color: #555; /* Example text color for the values */
+}
+
+.center-table {
+    margin: 0 auto;
+    text-align: center; /* Optional: aligns text inside the table cells */
+}
+
+/* label {
+    display: inline-block; /* Consistent alignment with inputs */
+/*    text-align: left; /* Right-align label text */
+/*    white-space: nowrap; 
+}  */
+
+input, select {
+    box-sizing: border-box;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+
+/* Ensuring labels and inputs are on the same line */
+.label-cell {
+    width: 20%;  Adjust as needed for label width
+    padding-right: 10px;  /* Space between label and input */
+    text-align: left; 
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+.input-cell {
+    text-align: left; 
+}
+
+/* Add Recipient Link */
+.add-recipient-link {
+    margin-left: 10px; /* Space between dropdown and link */
+    font-size: 14px; /* Optional: Adjust font size */
+    color: #28a745; /* Optional: Add link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.add-recipient-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* Button Styling */
+.add-gift-button {
+    background-color: #28a745; /* Red button */   
+
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding */
+    font-size: 16px; /* Adjust font size */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.add-gift-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.add-recipient-button {
+    background-color: #28a745; /* Green button */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding */
+    font-size: 16px; /* Adjust font size */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.add-recipient-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}

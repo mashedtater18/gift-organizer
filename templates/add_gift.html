@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <h1 style="margin-bottom: 30px;">Add a Gift</h1>
+
+    <table style="margin: 0 auto; margin-bottom: 30px; width: 80%; border-spacing: 10px;">
+        <form method="post" action="/add_gift">
+            <tr>
+                <td class="label-cell">
+                    <label for="recipient">Select a Recipient:</label>
+                </td>
+                <td class="input-cell">
+                    <select name="recipient_id" id="recipient" required>
+                    <!-- Dynamic options from the backend -->
+                    {% for recipient in recipients %}
+                        <option value="{{ recipient.id }}">{{ recipient.name }}</option>
+                    {% endfor %}
+                    </select>
+                    <a style="margin-top: 70px; margin-bottom: 70px;" class="add-recipient-link" href="/add_recipient" >Or, Add New Recipient</a> 
+                </td>
+            </tr>
+            <tr>
+                <td class="label-cell">
+                    <!-- Additional fields for adding the gift -->
+                    <label for="gift_name">Gift Name:</label>
+                </td>
+                <td class="input-cell">
+                    <input type="text" id="gift_name" name="gift_name" required>
+                </td>
+            </tr>
+            <tr>
+                <td class="label-cell">
+                    <!-- Additional fields for adding the gift -->
+                    <label for="amount_spent">Amount Spent: $</label>
+                </td>
+                <td class="input-cell">
+                    <input type="number" id="amount_spent" name="amount_spent" required>
+                </td>
+            </tr>
+            <tr>
+                <td class="label-cell">
+                    <!-- Additional fields for adding the gift -->
+                    <label for="status">Status:</label>
+                </td> 
+                <td class="input-cell">
+                    <select name="status" id="status">
+                        <option value="Pending">Pending</option>
+                        <option value="Purchased">Purchased</option>
+                        <option value="Wrapped">Wrapped</option>
+                        <option value="Given">Given</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button class="add-gift-button" style="margin-top: 20px; ">Add Gift</button>                
+                </td>
+            </tr>
+        </form>
+    </table>
+{% endblock %}

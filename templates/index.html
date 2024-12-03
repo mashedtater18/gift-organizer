@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+
+
+<main class="container py-5 text-center"></main>
+<h1 style="margin-bottom: 10px;">Gift Summary</h1>
+    <hr>
+    <p></p>   
+
+<a style="margin-top: 70px; margin-bottom: 70px; background-color: #B22222;" href="/add_gift" class="btn btn-primary">Add a Gift</a>
+
+
+<table class="table table-striped">
+   
+    <thead>
+        <!-- put notes on individual's page... this one is just overall summary -->
+        <!-- also put edit/delete on individual's page -->
+         <!-- may also want to add at the top (above summary) total budget and total spent? -->
+        <tr>
+            <th style="width: 200px;">Name</th>
+            <th style="text-align: left;" class="text-start">Gift</th>
+            <th>Amount Spent</th>
+            <th>Status</th> <!-- this will be dropdown menu -->
+            <th>Edit/Delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for gift in gifts %}
+
+        <tr style="width: 200px;" id="gift-row-{{ gift.id }}">
+            <!-- Recipient Name (Static, not editable here) -->
+            <td><a href="{{ url_for('recipient_summary', recipient_id=gift.recipient_id) }}">{{ gift.recipient_name }}</a></td>
+            
+            <!-- Gift Name -->
+            <td style="text-align: left;">
+                <span class="display-mode">{{ gift.gift_name }}</span>
+                <input class="edit-mode" type="text" value="{{ gift.gift_name }}" style="display: none;">
+            </td>
+
+            <!-- Amount Spent -->
+            <td>
+                <span class="display-mode">${{ gift.amount_spent }}</span>
+                <input class="edit-mode" type="number" value="{{ gift.amount_spent }}" style="display: none;">
+            </td>
+
+            <!-- Status -->
+            <td>
+                <span class="display-mode">{{ gift.status }}</span>
+                <select class="edit-mode" style="display: none;">
+                    <option value="Pending" {% if gift.status == "Pending" %}selected{% endif %}>Pending</option>
+                    <option value="Purchased" {% if gift.status == "Purchased" %}selected{% endif %}>Purchased</option>
+                    <option value="Wrapped" {% if gift.status == "Wrapped" %}selected{% endif %}>Wrapped</option>
+                </select>
+            </td>
+
+            <!-- action buttons -->
+            <td>
+                <button class="action-button" onclick="enableEditMode({{ gift.id }})"><i class="fas fa-pencil-alt"></i></button>
+                <button class="save-button" onclick="saveChanges({{ gift.id }})" style="display: none;">Save</button>
+                <form action="/delete_gift" method="POST" onsubmit="return confirm('Are you sure you want to delete this gift?');">
+                    <input type="hidden" name="gift_id" value="{{ gift.id }}">
+                    <button type="submit" class="action-button"><i class="fas fa-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+    <!-- static/js/script.js -->
+     <script>
+        function enableEditMode(giftId) {
+            const row = document.getElementById(`gift-row-${giftId}`);
+            const displayElements = row.querySelectorAll(".display-mode");
+            const editElements = row.querySelectorAll(".edit-mode");
+        
+            displayElements.forEach(el => el.style.display = "none");
+            editElements.forEach(el => el.style.display = "inline-block");
+        
+            row.querySelector(".edit-button").style.display = "none";
+            row.querySelector(".save-button").style.display = "inline-block";
+        }
+        
+        function saveChanges(giftId) {
+            const row = document.getElementById(`gift-row-${giftId}`);
+            const giftName = row.querySelector("input[type='text']").value;
+            const amountSpent = row.querySelector("input[type='number']").value;
+            const status = row.querySelector("select").value;
+        
+            fetch("/edit_gift", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: giftId,
+                    gift_name: giftName,
+                    amount_spent: amountSpent,
+                    status: status
+                })
+            }).then(response => {
+                if (response.ok) {
+                    // Reload or update the UI
+                    location.reload();
+                } else {
+                    alert("Error updating gift. Please try again.");
+                }
+            });
+        }
+    </script>
+       
+
+{% endblock %}
+
+
+

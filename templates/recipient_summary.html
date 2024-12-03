@@ -1,0 +1,139 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recipient Summary
+{% endblock %}
+
+{% block main %}
+
+<main class="container py-5 text-center"></main>
+<h1 class="main-header">Gift Summary - {{ recipient_name }}</h1>
+
+<table class="table table-striped" style="margin-bottom: 75px;">
+    <thead>
+        <tr>
+            <th class="text-start">Total Budget</th>
+            <th class="text-start">Total Spent</th>
+            <th class="text-start">Budget Remaining</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td class="text-start">${{ budget }}</td>
+            <td class="text-start">${{ total_spent }}</td>
+            <td class="text-start">${{ remaining_budget }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-start">Gift</th>
+            <th class="text-start">Amount Spent</th>
+            <th class="text-start">Status</th> <!-- this will be dropdown menu -->
+            <th class="text-start">Save/Delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for gift in gifts %}
+        <tr id="gift-row-{{ gift.id }}">
+        
+                <td style="text-align: left;">
+                    <input type="text" name="gift_name" class="gift_name" value="{{ gift.gift_name }}" data-gift-id="{{ gift.id }}" 
+                    />
+                </td>
+                <td style="text-align: left;">
+                    <input type="number" name="amount_spent class="amount_spent" value="{{ gift.amount_spent }}" data-gift-id="{{ gift.id }}" 
+                    />
+                </td>
+                <td style="text-align: left;">
+                    <select name="status" class="status" data-gift-id="{{ gift.id }}">
+                        <option value="Pending" {% if gift.status == "Pending" %}selected{% endif %}>Pending</option>
+                        <option value="Purchased" {% if gift.status == "Purchased" %}selected{% endif %}>Purchased</option>
+                        <option value="Wrapped" {% if gift.status == "Wrapped" %}selected{% endif %}>Wrapped</option>
+                    </select>
+                </td>
+
+
+            <!-- save/delete buttons -->
+            <td style="text-align: left;">
+                <div class="action-buttons"></div>  
+
+                <button type="button" class="action-button" onclick="saveChanges({{ gift.id }})"><i class="fas fa-save"></i></button>
+                    <!-- Save Button (Similar to the delete button setup) -->
+                    <input type="hidden" name="gift_id" value="{{ gift.id }}">
+                    </button>
+            
+                    <form action="/delete_gift" method="POST" onsubmit="return confirm('Are you sure you want to delete this gift?');">
+                        <input type="hidden" name="gift_id" value="{{ gift.id }}">
+                        <button type="submit" class="action-button">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+<!-- Back to All Gifts -->
+<a href="/">Back to All Gifts</a>
+
+{% endblock %}
+
+
+<!-- static/js/script.js -->
+<script>
+    function enableEditMode(giftId) {
+        const row = document.getElementById(`gift-row-${giftId}`);
+        const displayElements = row.querySelectorAll(".display-mode");
+        const editElements = row.querySelectorAll(".edit-mode");
+
+        displayElements.forEach(el => el.style.display = "none");
+        editElements.forEach(el => el.style.display = "inline-block");
+
+        row.querySelector(".edit-button").style.display = "none";
+        row.querySelector(".save-button").style.display = "inline-block";
+    }
+
+    function saveChanges(giftId) {
+        const row = document.getElementById(`gift-row-${giftId}`);
+        const giftName = row.querySelector("input[type='text']").value;
+        const amountSpent = row.querySelector("input[type='number']").value;
+        const status = row.querySelector("select").value;
+
+        fetch("/edit_gift", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id: giftId,
+                gift_name: giftName,
+                amount_spent: amountSpent,
+                status: status
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+            if (response.ok) {
+                // Provide feedback to the user (optional)
+                console.log("Gift updated successfully:", data.message);
+            } else {
+                console.error("Error updating gift:", data.error);
+                alert("Failed to save changes. Please try again.");
+            })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    }
+</script>
+    
+
+
+
+

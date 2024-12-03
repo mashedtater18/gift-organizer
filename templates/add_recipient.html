@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Recipient
+{% endblock %}
+
+{% block main %}
+    <h1 style="margin-bottom: 30px;">Add a Gift Recipient</h1>
+    <table style="margin: 0 auto; margin-bottom: 30px;">
+        <form method="post" action="/add_recipient">
+            <tr>
+                <td class="label-cell"> 
+                    <label for="recipient">Recipient:</label>
+                </td>
+                <td class="input-cell">
+                    <input type="text" id="recipient_name" name="recipient_name" required> 
+                </td>
+            </tr>
+            <tr>
+                <td class="label-cell">
+                    <label for="budget">Budget: $</label>
+                </td>
+                <td class="input-cell">
+                    <input type="number" id="budget" name="budget" required>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="add-gift-button" style="margin-top: 20px; " type="submit">Add Recipient</button>
+                </td>
+            </tr> 
+
+        </form>
+    </table>
+{% endblock %}
